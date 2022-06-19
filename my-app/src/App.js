@@ -10,29 +10,31 @@ export default class App extends Component {
     }
   }
   componentDidMount(){
-    // console.log("Hi");
     fetch("https://jsonplaceholder.typicode.com/users").then(res=>res.json()).then(data=>this.setState(()=>{
       return {
         employees:data
       }
     }));
   }
+  onSearchChange = (event) =>{
+    const searchField=event.target.value.toLocaleLowerCase();
+    this.setState(()=>{
+      return {
+        searchField
+      }
+    })
+  }
   render() {
-    const filteredEmployees=this.state.employees.filter((user)=>{
+    const {employees,searchField}=this.state;
+    const {onSearchChange}=this;
+    const filteredEmployees=employees.filter((user)=>{
       return (
-        user.name.toLocaleLowerCase().includes(this.state.searchField)
+        user.name.toLocaleLowerCase().includes(searchField)
       )
     });
     return (
       <div className='app'>
-        <input className="search" placeholder="Search..." type="search" onChange={(event)=>{
-          const searchField=event.target.value.toLocaleLowerCase();
-          this.setState(()=>{
-            return {
-              searchField
-            }
-          })
-        }} />
+        <input className="search" placeholder="Search..." type="search" onChange={onSearchChange} />
         {filteredEmployees.map(user=>{
           return (
             <div key={user.id}>
