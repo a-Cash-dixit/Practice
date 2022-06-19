@@ -5,7 +5,8 @@ export default class App extends Component {
   constructor(){
     super();
     this.state={
-      employees:[]
+      employees:[],
+      searchField:""
     }
   }
   componentDidMount(){
@@ -17,9 +18,22 @@ export default class App extends Component {
     }));
   }
   render() {
+    const filteredEmployees=this.state.employees.filter((user)=>{
+      return (
+        user.name.toLocaleLowerCase().includes(this.state.searchField)
+      )
+    });
     return (
       <div className='app'>
-        {this.state.employees.map(user=>{
+        <input className="search" placeholder="Search..." type="search" onChange={(event)=>{
+          const searchField=event.target.value.toLocaleLowerCase();
+          this.setState(()=>{
+            return {
+              searchField
+            }
+          })
+        }} />
+        {filteredEmployees.map(user=>{
           return (
             <div key={user.id}>
               <h1>{user.name}</h1>
