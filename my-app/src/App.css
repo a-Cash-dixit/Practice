@@ -1,8 +1,6 @@
-.app{
+body{
+  margin: 0;
+  padding: 0;
+  background: #DD5E89;
   text-align: center;
-}
-.search{
-  padding: 20px;
-  width: 500px;
-  height: 50px;
 }
